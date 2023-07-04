@@ -1,0 +1,29 @@
+.comment-view {
+    border: 1px solid #999999;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    &>.comment-header {
+        padding-bottom: 1em;
+        font-size: 0.6em;
+    }&>.comment-content {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.8em;
+        line-height: 1.4em;
+        gap: 0.5em;
+        padding-bottom: 0.5em;
+        p {
+            margin: 0;
+        }
+        img {
+            max-height: 10em;
+        }
+    }
+    
+    &>.comment-replies {
+        padding-top: 0.25em;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
+}

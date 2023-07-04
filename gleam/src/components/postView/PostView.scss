@@ -1,0 +1,24 @@
+.post-view {
+    text-align: start;
+    padding: 0 2em;
+    overflow-y: auto;
+    height: 100%;
+    overflow-x: hidden;
+
+    &>h1 {
+        font-size: 1.5em;
+    }
+
+    &>.post-comments {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em
+    }
+
+    &>.post-content {
+        padding: 0.5em;
+        &>img {
+            max-height: 20em;
+        }
+    }
+}
