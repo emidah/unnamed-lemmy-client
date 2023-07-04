@@ -54,19 +54,23 @@
 }
 
 .side-by-side-container {
-  padding: 2em;
+  padding: 0 2em;
   display: flex;
   flex-direction: row;
   justify-content: stretch;
   height: 100%;
-  & > .side-by-side-list {
+
+  &>.side-by-side-list {
+    padding-top: 1em;
+    padding-right: 1em;
     height: 100%;
     overflow-y: auto;
-    flex-shrink: 1;
     width: 100%;
     max-width: 50vw;
   }
-  & > .side-by-side-post {
-    width: 0px;
+
+  &>.side-by-side-post {
+    width: 100%;
+    max-width: 50vw;
   }
 }

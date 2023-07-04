@@ -1,16 +1,17 @@
 import { PostView } from "lemmy-js-client"
 import "./postListing.scss"
 import PostOptions from "./PostOptions";
-import { getClient } from "../../lemmy-client/client";
 import { Link } from "react-router-dom";
+import { formatCreator } from "../../helpers/user-helper";
 
-export default function PostListing(props: { post: PostView }) {
+export default function PostListing(props: { post: PostView, isOpen: boolean }) {
     const post = props.post.post;
-    const creator = formatCreator(props.post);
+    const isOpen = props.isOpen;
+    const creator = formatCreator(props.post.creator);
     const hasThumbnail = !!post.thumbnail_url;
     const thumbnail = post.thumbnail_url;
     const name = post.name;
-    return <article className="postListing">
+    return <article className={"postListing" + (isOpen ? " post-highlighted" : "") }>
         <div className="columns">
             <div className="thumbnail-container">
                 {hasThumbnail
@@ -26,16 +27,4 @@ export default function PostListing(props: { post: PostView }) {
             </div>
         </div>
     </article>
-}
-
-function formatCreator(post: PostView): string {
-    const client = getClient();
-    const { data: federated } = client.getFederated();
-    let instanceName: string = "???";
-    if(federated){
-       const instance = federated.get(post.creator.instance_id);
-       instanceName = instance?.domain ?? instanceName;
-    }
-    const name = `@${post.creator.name}@${instanceName}`;
-    return name;
 }
