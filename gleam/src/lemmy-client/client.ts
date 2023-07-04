@@ -1,21 +1,51 @@
-import { LemmyHttp, GetPostsResponse } from 'lemmy-js-client';
+import { LemmyHttp, GetPostsResponse, Instance } from 'lemmy-js-client';
+import { SWRResponse } from 'swr';
+import useSWRImmutable from 'swr/immutable';
 
-const createClient = (url: string) => { 
+const clients = new Map<string, LemmyClient>();
+
+const getClient = () => { 
+    const url = "http://localhost:3000";
+    if(clients.has(url)){
+        return clients.get(url)!;
+    }
     const client = new LemmyHttp(url);
     const toReturn: LemmyClient = {
-        getPosts: () => log('get posts') && client.getPosts({ type_: "All", page: 1, limit: 40, sort: "TopDay" })
+        getMainPosts: (page: number) => getMainPosts(client, page),
+        getFederated: () => getFederated(client),
+        invalidate: (action) => (action),
     };
+    clients.set(url, toReturn);
     return toReturn;
 };
 
-const log = (method: string) : true => {
+function getMainPosts(client: LemmyHttp, page: number){
+    return useSWRImmutable("getMainPosts", () => log('get posts') && client.getPosts({ type_: "All", page, limit: 40, sort: "TopDay" }))
+}
+
+function getFederated(client: LemmyHttp) {
+    return useSWRImmutable("getFederated", () => log('get instances') && getFederatedInstances(client))
+};
+
+function log(method: string): true{
     console.log(method);
     return true;
 }
 
 type LemmyClient = {
-    getPosts: () => Promise<GetPostsResponse>;
+    getMainPosts: (page: number) => SWRResponse<GetPostsResponse, any, any>;
+    getFederated: () => SWRResponse<Map<number, Instance>, any, any>;
+    invalidate: (action: LemmyAction) => void;
 }
 
-export { createClient };
+type LemmyAction = "getMainPosts" | "getFederated";
+
+export { getClient };
 export type { LemmyClient }
+
+async function getFederatedInstances(client: LemmyHttp) {
+    const federated = await client.getFederatedInstances();
+    const map = new Map<number, Instance>();
+    federated.federated_instances!.linked.forEach(instance => map.set(instance.id, instance));
+    return map;
+}

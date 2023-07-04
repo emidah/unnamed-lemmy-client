@@ -1,25 +1,16 @@
 import './App.scss'
-import useSWR from 'swr';
-import { createClient } from './lemmy-client/client';
-import type { LemmyClient } from './lemmy-client/client';
-import PostList from './components/postList';
-
-function getClient(): LemmyClient {
-	return createClient("http://localhost:3000");
-}
-
-async function getPosts() {
-	const client = getClient();
-	return await client.getPosts();
-}
+import { getClient } from './lemmy-client/client';
+import PostList from './components/postList/PostList';
+import { Outlet } from "react-router-dom";
 
 function App() {
-	const { data, error, isLoading } = useSWR("mainPosts", getPosts);
-	if (isLoading)
-		return <><h2>Loading... 
+	const client = getClient();
+	const { data, error, isLoading } = client!.getMainPosts(1);
+	if (!data || isLoading)
+		return <><h2>
 			<span className="material-symbols-outlined spin">
 				progress_activity
-			</span>
+			</span> Loading... 
 		</h2></>
 	if (error) {
 		console.error(error);
@@ -28,11 +19,14 @@ function App() {
 
 	const posts = PostList(data!.posts);
 	return (
-		<>
-			<div>
+		<div className='side-by-side-container'>
+			<div className='side-by-side-list'>
 				{posts}
 			</div>
-		</>
+			<div className='side-by-side-post'>
+				<Outlet />
+			</div>
+		</div>
 	)
 }
 

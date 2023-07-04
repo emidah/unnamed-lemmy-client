@@ -1,8 +1,8 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1rem;
+  margin: 0;
+  padding: 0;
   text-align: center;
+  height: 100%;
 }
 
 .spin {
@@ -53,10 +53,20 @@
   }
 }
 
-.card {
+.side-by-side-container {
   padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  height: 100%;
+  & > .side-by-side-list {
+    height: 100%;
+    overflow-y: auto;
+    flex-shrink: 1;
+    width: 100%;
+    max-width: 50vw;
+  }
+  & > .side-by-side-post {
+    width: 0px;
+  }
 }

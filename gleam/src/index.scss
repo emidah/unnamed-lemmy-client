@@ -2,6 +2,9 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1;
   font-weight: 400;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -37,7 +40,7 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #99b4ff;
   text-decoration: inherit;
 }
 a:hover {
@@ -46,10 +49,11 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   min-width: 320px;
   min-height: 100vh;
   font-size: 1.2em;
+  width: 100%;
+  height: 100vh;
 }
 
 @media (prefers-color-scheme: light) {
