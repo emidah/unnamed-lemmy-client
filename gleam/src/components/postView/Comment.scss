@@ -1,9 +1,9 @@
 .comment-view {
     border: 1px solid #999999;
     border-radius: 0.5em;
-    padding: 0.5em 1em;
+    padding: 0.5em 0.2em 0.2em 1em;
     &>.comment-header {
-        padding-bottom: 1em;
+        padding-bottom: 0.5em;
         font-size: 0.6em;
     }&>.comment-content {
         display: flex;

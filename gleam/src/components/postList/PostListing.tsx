@@ -11,18 +11,20 @@ export default function PostListing(props: { post: PostView, isOpen: boolean }) 
     const hasThumbnail = !!post.thumbnail_url;
     const thumbnail = post.thumbnail_url;
     const name = post.name;
-    return <article className={"postListing" + (isOpen ? " post-highlighted" : "") }>
+    return <article className={"postListing" + (isOpen ? " post-highlighted" : "")}>
         <div className="columns">
             <div className="thumbnail-container">
-                {hasThumbnail
-                    ? <img src={thumbnail} className="thumbnail"></img>
-                    : <div className="thumbnail-placeholder">
-                        <span className="material-symbols-outlined">comment</span>
-                    </div>}
+                <Link to={"post/" + post.id}>
+                    {hasThumbnail
+                        ? <img src={thumbnail} className="thumbnail"></img>
+                        : <div className="thumbnail-placeholder">
+                            <span className="material-symbols-outlined">comment</span>
+                        </div>}
+                </Link>
             </div>
             <div className="title-container">
                 <h2><Link to={"post/" + post.id}>{name}</Link></h2>
-                <div className="by-user">by <a href={props.post.creator.actor_id}>{creator}</a></div>
+                <div className="by-user">by <a href={props.post.creator.actor_id}>{creator}</a> to <a href={props.post.community.actor_id}>{props.post.community.name}</a></div>
                 <PostOptions post={props.post}></PostOptions>
             </div>
         </div>

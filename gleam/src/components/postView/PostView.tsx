@@ -2,16 +2,20 @@ import { useParams } from "react-router-dom";
 import { getClient } from "../../lemmy-client/client";
 import Comment from "./Comment";
 import "./PostView.scss"
+import MarkdownIt from "markdown-it";
+import { Error } from "../message/Error";
+import Loading from "../message/Loading";
+const md = new MarkdownIt();
 
 export default function PostView() {
     let { postId } = useParams();
     const client = getClient();
     const { data, isLoading, error } = client.getSinglePost(parseInt(postId || "-1", 10));
-    if (isLoading || !data) {
-        return <div>Loading</div>
+    if (isLoading) {
+        return <Loading />
     }
-    if (!postId || error) {
-        return <div>Error</div>
+    if (!data || !postId || error) {
+        return <Error />
     }
     const [post, comments] = data!;
     const isImage = isImageUrl(post.post_view.post.url);
@@ -19,7 +23,12 @@ export default function PostView() {
     return <div className="post-view">
         <h1>{post.post_view.post.name}</h1>
         <div className="post-content">
-            {isImage ? <img src={post.post_view.post.url}></img> : ""}
+            {post.post_view.post.url && isImage ? 
+                <a href={post.post_view.post.url} target="_blank">
+                    <img src={post.post_view.post.url}></img>
+                </a> : ""}
+            {post.post_view.post.url && !isImage ? <a href={post.post_view.post.url} target="_blank">{post.post_view.post.url}</a> : ""}
+            {post.post_view.post.body ? <div className="post-body" dangerouslySetInnerHTML={{ __html: md.render(post.post_view.post.body!) }}></div> : ""}
         </div>
         <div className="post-comments">{commentComponents}</div>
 

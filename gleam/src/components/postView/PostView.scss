@@ -7,6 +7,10 @@
 
     &>h1 {
         font-size: 1.5em;
+        font-weight: 500;
+        padding-bottom: 0.2em;
+        border-bottom: 1px solid orangered;
+        margin-bottom: 0;
     }
 
     &>.post-comments {
@@ -16,9 +20,48 @@
     }
 
     &>.post-content {
-        padding: 0.5em;
-        &>img {
-            max-height: 20em;
+        padding: 1em 0em;
+        line-height: 1.2em;
+        font-size: 0.8em;
+
+        &>.post-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+
+            h1 {
+                font-size: 1.4em;
+                margin: 0.3em 0;
+            }
+    
+            h2 {
+                font-size: 1.3em;
+                margin: 0.3em 0;
+            }
+    
+            h3 {
+                font-size: 1.2em;
+                margin: 0.3em 0;
+            }
+    
+            p {
+                margin: 0
+            }
+
+            ul {
+                margin: 0;
+                li {
+                    margin: 0.3em 0;
+                }
+            }
         }
+
+        &>a>img {
+            max-height: 20em;
+            object-fit: contain;
+            display: block;
+            padding: 0.5em 0;
+        }
+
     }
 }
