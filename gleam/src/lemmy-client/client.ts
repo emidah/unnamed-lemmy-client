@@ -5,7 +5,7 @@ import useSWRImmutable from 'swr/immutable';
 const clients = new Map<string, LemmyClient>();
 
 const getClient = () => {
-    const url = "http://localhost:3000";
+    const url = "https://wispy-water-3409.fly.dev";
     if (clients.has(url)) {
         return clients.get(url)!;
     }
