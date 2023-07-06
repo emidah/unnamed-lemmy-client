@@ -3,7 +3,7 @@ const app =express();
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const LEMMY_TARGET = process.env.LEMMY_TARGET ?? 'https://lemmy.world';
-const CLIENT_SITE = process.env.CLIENT_SITE ?? 'http://localhost:5173';
+const CLIENT_SITE = process.env.CLIENT_SITE ?? 'http://localhost:3000';
 
 app.use("/", express.static('./gleam/dist'));
 

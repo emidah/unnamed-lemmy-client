@@ -5,6 +5,7 @@ import "./PostView.scss"
 import MarkdownIt from "markdown-it";
 import { Error } from "../message/Error";
 import Loading from "../message/Loading";
+import sanitizeUrl from "../../helpers/sanitizer";
 const md = new MarkdownIt();
 
 export default function PostView() {
@@ -24,10 +25,10 @@ export default function PostView() {
         <h1>{post.post_view.post.name}</h1>
         <div className="post-content">
             {post.post_view.post.url && isImage ? 
-                <a href={post.post_view.post.url} target="_blank">
+                <a href={sanitizeUrl(post.post_view.post.url)} target="_blank">
                     <img src={post.post_view.post.url}></img>
                 </a> : ""}
-            {post.post_view.post.url && !isImage ? <a href={post.post_view.post.url} target="_blank">{post.post_view.post.url}</a> : ""}
+            {post.post_view.post.url && !isImage ? <a href={sanitizeUrl(post.post_view.post.url)} target="_blank">{post.post_view.post.url}</a> : ""}
             {post.post_view.post.body ? <div className="post-body" dangerouslySetInnerHTML={{ __html: md.render(post.post_view.post.body!) }}></div> : ""}
         </div>
         <div className="post-comments">{commentComponents}</div>
